@@ -1,12 +1,19 @@
 variable "auth_token" {
   type        = string
   description = "Your Equinix Metal API key"
+  sensitive   = true
 }
 
 variable "facility" {
   type        = string
-  description = "Equinix Metal Facility"
-  default     = "dc13"
+  description = "Equinix Metal Facility (conflicts with metro)"
+  default     = ""
+}
+
+variable "metro" {
+  type        = string
+  description = "Equinix Metal Metro (conflicts with facility)"
+  default     = "dc"
 }
 
 variable "project_id" {
@@ -100,7 +107,7 @@ variable "storage" {
 }
 
 variable "workloads" {
-  type        = map
+  type        = map(any)
   description = "Workloads to apply on provisioning (multiple manifests for a single key should be a comma-separated string)"
   default = {
     cni_cidr             = "192.168.0.0/16"
